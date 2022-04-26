@@ -12,6 +12,6 @@ namespace SnacksUdemy
 
         //Classes mapeed
         public DbSet<Category> Categorìes { get; set; }
-        public DbSet<Category> Snacks { get; set; }
+        public DbSet<Snack> Snacks { get; set; }
     }
 }

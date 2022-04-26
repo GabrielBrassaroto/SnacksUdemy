@@ -1,8 +1,11 @@
-﻿namespace SnacksUdemy.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SnacksUdemy.Models
 {
     public class Category
     {
         public int CategoryId { get; set; }
+
 
         public string  Name { get; set; }
 
