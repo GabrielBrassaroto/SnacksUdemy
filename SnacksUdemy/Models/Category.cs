@@ -8,6 +8,7 @@
 
         public string Descripton { get; set; }
 
+        //Foreign key navegation
         public List<Snack> Snacks { get; set; }
     }
 }

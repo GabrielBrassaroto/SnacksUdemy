@@ -20,6 +20,7 @@
         public string Stock { get; set; }
 
 
+
         //foreign key navegation
         public int CategoryId { get; set; }
 
