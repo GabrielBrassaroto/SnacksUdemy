@@ -6,7 +6,7 @@ namespace SnacksUdemy
     public class AppDbContext : DbContext
     {
         //contructor EF
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
