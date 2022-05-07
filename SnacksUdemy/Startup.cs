@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SnacksUdemy;
+using SnacksUdemy.Repositories;
+using SnacksUdemy.Repositories.Interfaces;
+using SnacksUdemy.Repository;
 
 namespace LanchesMac;
 public class Startup
@@ -17,6 +20,9 @@ public class Startup
         //Additional AppDBContext 
         services.AddDbContext<AppDbContext>(options => options.
         UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddTransient<ISnackRepository, SnackRepository>();
+        services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 
         services.AddControllersWithViews();

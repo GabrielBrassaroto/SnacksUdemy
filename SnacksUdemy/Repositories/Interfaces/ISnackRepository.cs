@@ -2,7 +2,7 @@
 
 namespace SnacksUdemy.Repositories.Interfaces
 {
-    public interface ISnackInterface
+    public interface ISnackRepository
     {
         IEnumerable<Snack> Snacks { get; }
 

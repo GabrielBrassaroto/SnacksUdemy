@@ -2,7 +2,7 @@
 
 namespace SnacksUdemy.Repository
 {
-    public interface ICategoryInterface
+    public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get; }
     }

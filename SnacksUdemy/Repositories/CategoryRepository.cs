@@ -2,7 +2,7 @@
 
 namespace SnacksUdemy.Repository
 {
-    public class CategoryRepository : ICategoryInterface
+    public class CategoryRepository : ICategoryRepository
     {
        private readonly AppDbContext _context;   
 

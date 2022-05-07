@@ -4,7 +4,7 @@ using SnacksUdemy.Repositories.Interfaces;
 
 namespace SnacksUdemy.Repositories
 {
-    public class SnackRepository : ISnackInterface
+    public class SnackRepository : ISnackRepository
     {
 
         private readonly AppDbContext _context;
