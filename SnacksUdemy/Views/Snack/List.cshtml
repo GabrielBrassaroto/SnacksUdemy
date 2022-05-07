@@ -1,0 +1,11 @@
+﻿@model IEnumerable<SnacksUdemy.Models.Snack>
+
+<div>All Snacks</div>
+@foreach (var snack in Model)
+{
+    <div>
+        <h4>Snack : @snack.Name</h4>
+        <p><img src="@snack.ImageUrl"></p>
+        <p>Price : @snack.Price.ToString("c")</p>
+    </div>
+}
