@@ -1,10 +1,20 @@
 ﻿@model IEnumerable<SnacksUdemy.Models.Snack>
 
-<div>All Snacks</div>
+<div>
+<h2>@ViewData["Titulo"]</h2>    
+</div>
+<h2>@ViewData["Date"]</h2>
+<hr/ >
+<h3>@ViewBag.Total @ViewBag.TotalSnacks</h3>
+<hr/>
+
+<h1>@TempData["Name"]</h1>
+
+
 @foreach (var snack in Model)
 {
     <div>
-        <h4>Snack : @snack.Name</h4>
+        <h4> @snack.Name</h4>
         <p><img src="@snack.ImageUrl"></p>
         <p>Price : @snack.Price.ToString("c")</p>
     </div>
