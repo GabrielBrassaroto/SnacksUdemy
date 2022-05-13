@@ -14,13 +14,7 @@ namespace SnacksUdemy.Controllers
 
         public IActionResult List()
         {
-            ViewData["Titulo"] = "All Snacks";
-            ViewData["Date"] = DateTime.Now;
             var snacks = _snackRepository.Snacks;
-            var totalSnacks = snacks.Count();
-            ViewBag.Total = "Total Snacks";
-            ViewBag.TotalSnacks = totalSnacks;
-
             return View(snacks);
         }
     }

@@ -9,7 +9,6 @@ namespace SnacksUdemy.Controllers
 
         public IActionResult Index()
         {
-            TempData["Name"] = "Gabriel Brassaroto";
             return View();
         }
 
