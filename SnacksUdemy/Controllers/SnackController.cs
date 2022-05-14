@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SnacksUdemy.Repositories.Interfaces;
+using SnacksUdemy.ViewModels;
 
 namespace SnacksUdemy.Controllers
 {
@@ -14,8 +15,13 @@ namespace SnacksUdemy.Controllers
 
         public IActionResult List()
         {
-            var snacks = _snackRepository.Snacks;
-            return View(snacks);
+            var snacksLisViewModel = new SnackListViewModel();
+            snacksLisViewModel.Snacks = _snackRepository.Snacks;
+            snacksLisViewModel.CurrentCategory = "Category Current";
+            return View(snacksLisViewModel);
+
+            //var snacks = _snackRepository.Snacks;
+            //return View(snacks);
         }
     }
 }
