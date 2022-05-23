@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SnacksUdemy;
+using SnacksUdemy.Models;
 using SnacksUdemy.Repositories;
 using SnacksUdemy.Repositories.Interfaces;
 using SnacksUdemy.Repository;
@@ -23,7 +24,16 @@ public class Startup
 
         services.AddTransient<ISnackRepository, SnackRepository>();
         services.AddTransient<ICategoryRepository, CategoryRepository>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        //metodo que foi criado statico para ser invocado na statup
+        // e ter carrinho com list de itens e context e session
+        // e addscope cria cada request uma session e carrinhos diferentese tempo de vida
 
+        services.AddScoped(sp => ShoppingCart.GetCart(sp));
+       
+        services.AddMemoryCache();
+        services.AddSession();
+  
 
         services.AddControllersWithViews();
     }
@@ -47,6 +57,8 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthorization();
+
+        app.UseSession();
 
         app.UseEndpoints(endpoints =>
         {
