@@ -26,24 +26,34 @@ namespace SnacksUdemy.Controllers
             }
             else
             {
-                if (string.Equals("Normal", category, StringComparison.OrdinalIgnoreCase))
-                {
-                    snacks = _snackRepository.Snacks.Where(x => x.Category.
-                    CategoryName.Equals("Normal")).OrderBy(x => x.Name);
-                }
-                else
-                {
-                    snacks = _snackRepository.Snacks.Where(x => x.Category.
-                    CategoryName.Equals("Natural")).OrderBy(x => x.Name);
-                }
+                //    if (string.Equals("Normal", category, StringComparison.OrdinalIgnoreCase))
+                //    {
+                //        snacks = _snackRepository.Snacks.Where(x => x.Category.
+                //        CategoryName.Equals("Normal")).OrderBy(x => x.Name);
+                //    }
+                //    else
+                //    {
+                //        snacks = _snackRepository.Snacks.Where(x => x.Category.
+                //        CategoryName.Equals("Natural")).OrderBy(x => x.Name);
+                //    }
+                //    categoryCurrent = category;
+
+
+                snacks = _snackRepository.Snacks.Where(
+                    x => x.Category.CategoryName.Equals(category))
+                    .OrderBy(c => c.Name);
                 categoryCurrent = category;
             }
+
+
+
 
             var snacksLisViewModel = new SnackListViewModel
             {
                 Snacks = snacks,
                 CurrentCategory = categoryCurrent
             };
+
             return View(snacksLisViewModel);
 
             //var snacks = _snackRepository.Snacks;
