@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SnacksUdemy.Models;
 using SnacksUdemy.Repositories.Interfaces;
 using SnacksUdemy.ViewModels;
 
@@ -13,11 +14,36 @@ namespace SnacksUdemy.Controllers
             _snackRepository = snackRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string category)
         {
-            var snacksLisViewModel = new SnackListViewModel();
-            snacksLisViewModel.Snacks = _snackRepository.Snacks;
-            snacksLisViewModel.CurrentCategory = "Category Current";
+            IEnumerable<Snack> snacks;
+            string categoryCurrent = string.Empty;
+            if (string.IsNullOrEmpty(category))
+            {
+
+                snacks = _snackRepository.Snacks.OrderBy(x => x.SnackId);
+                categoryCurrent = "All Snacks";
+            }
+            else
+            {
+                if (string.Equals("Normal", category, StringComparison.OrdinalIgnoreCase))
+                {
+                    snacks = _snackRepository.Snacks.Where(x => x.Category.
+                    CategoryName.Equals("Normal")).OrderBy(x => x.Name);
+                }
+                else
+                {
+                    snacks = _snackRepository.Snacks.Where(x => x.Category.
+                    CategoryName.Equals("Natural")).OrderBy(x => x.Name);
+                }
+                categoryCurrent = category;
+            }
+
+            var snacksLisViewModel = new SnackListViewModel
+            {
+                Snacks = snacks,
+                CurrentCategory = categoryCurrent
+            };
             return View(snacksLisViewModel);
 
             //var snacks = _snackRepository.Snacks;
