@@ -26,18 +26,6 @@ namespace SnacksUdemy.Controllers
             }
             else
             {
-                //    if (string.Equals("Normal", category, StringComparison.OrdinalIgnoreCase))
-                //    {
-                //        snacks = _snackRepository.Snacks.Where(x => x.Category.
-                //        CategoryName.Equals("Normal")).OrderBy(x => x.Name);
-                //    }
-                //    else
-                //    {
-                //        snacks = _snackRepository.Snacks.Where(x => x.Category.
-                //        CategoryName.Equals("Natural")).OrderBy(x => x.Name);
-                //    }
-                //    categoryCurrent = category;
-
 
                 snacks = _snackRepository.Snacks.Where(
                     x => x.Category.CategoryName.Equals(category))
@@ -55,9 +43,12 @@ namespace SnacksUdemy.Controllers
             };
 
             return View(snacksLisViewModel);
+        }
 
-            //var snacks = _snackRepository.Snacks;
-            //return View(snacks);
+        public ActionResult Details(int snackId)
+        {
+           var snack = _snackRepository.Snacks.FirstOrDefault( l => l.SnackId == snackId );
+            return View(snack);
         }
     }
 }
