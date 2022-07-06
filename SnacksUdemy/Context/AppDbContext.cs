@@ -15,5 +15,9 @@ namespace SnacksUdemy
         public DbSet<Snack> Snacks { get; set; }
 
         public DbSet<ShoppingCartItem> ShoppingCartItens { get; set; }
+
+        public DbSet<Request> Requests { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }
