@@ -50,5 +50,36 @@ namespace SnacksUdemy.Controllers
            var snack = _snackRepository.Snacks.FirstOrDefault( l => l.SnackId == snackId );
             return View(snack);
         }
+
+        public ViewResult Search(string seachString)
+        {
+            IEnumerable<Snack> snacks;
+            string categoryCurrent = string.Empty;
+
+            if (string.IsNullOrEmpty(seachString))
+            {
+                snacks = _snackRepository.Snacks.OrderBy(p => p.SnackId);
+                categoryCurrent = "All Snacks";
+
+            }
+            else
+            {
+                snacks = _snackRepository.Snacks.Where(p => p.Name.ToLower()
+                .Contains(seachString.ToLower()));
+                if (snacks.Any())
+                {
+                    categoryCurrent = "Snack";
+                }
+                else
+                {
+                    categoryCurrent = "No snacks were found ";
+                }
+            }
+
+            return View("~/Views/Snack/List.cshtml", new SnackListViewModel {
+                Snacks = snacks,
+                CurrentCategory = categoryCurrent});
+        }
+
     }
 }

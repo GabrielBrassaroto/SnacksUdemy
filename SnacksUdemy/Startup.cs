@@ -24,6 +24,7 @@ public class Startup
 
         services.AddTransient<ISnackRepository, SnackRepository>();
         services.AddTransient<ICategoryRepository, CategoryRepository>();
+        services.AddTransient<IRequestRepository, RequestRepository>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         //metodo que foi criado statico para ser invocado na statup
         // e ter carrinho com list de itens e context e session
