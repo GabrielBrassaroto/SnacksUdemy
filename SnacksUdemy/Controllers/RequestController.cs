@@ -62,7 +62,7 @@ namespace SnacksUdemy.Controllers
                 ///clear cart shopping cart
                 _shoppingCart.CleanCart();
 
-                return View("~/Views/Request/CheckoutComplete.chtml", request);
+                return View("~/Views/Request/CheckoutCompleto.cshtml", request);
             }
             return View(request);
         }

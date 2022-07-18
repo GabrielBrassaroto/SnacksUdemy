@@ -75,7 +75,8 @@ namespace SnacksUdemy.Models
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? OrderShippingDate { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderDetail> RequestItens { get; set; }
+
 
     }
 }
