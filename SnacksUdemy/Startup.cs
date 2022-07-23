@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SnacksUdemy;
 using SnacksUdemy.Models;
 using SnacksUdemy.Repositories;
@@ -21,6 +22,14 @@ public class Startup
         //Additional AppDBContext 
         services.AddDbContext<AppDbContext>(options => options.
         UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        //IdentityUser - gerencia o usuario
+        //IdentityRole fornece informacoes sobre o usuario
+        //AddEntityFrameworkStores - aramazenar e recueperar informacoes do perfil do usuario com ef core para o sql
+        //AddDefaultTokenProviders para geradacao de token dois fatores redefinacao de senha email e outros dados do usuarios
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
         services.AddTransient<ISnackRepository, SnackRepository>();
         services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -57,9 +66,11 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseSession();
+
 
         app.UseEndpoints(endpoints =>
         {
