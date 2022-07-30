@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SnacksUdemy.Controllers
 {
+    [Authorize(Roles = "Admin")]///validation controller identity
     public class ContactController : Controller
     {
+      
+        [AllowAnonymous]//allow unauthenticated users
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated) { return View(); }   
+            return RedirectToAction("Login","Account");
         }
     }
 }

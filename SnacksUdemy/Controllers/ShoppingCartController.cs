@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SnacksUdemy.Models;
 using SnacksUdemy.Repositories.Interfaces;
 using SnacksUdemy.ViewModels;
@@ -19,20 +20,21 @@ namespace SnacksUdemy.Controllers
 
         public IActionResult Index()
         {
-          var itens = _shoppingCart.GetShoppingCartItens();
+            var itens = _shoppingCart.GetShoppingCartItens();
 
             _shoppingCart.ShoppingCartItems = itens;
 
-            var shoppingCartVM = new  ShoppingCartViewModel{
+            var shoppingCartVM = new ShoppingCartViewModel
+            {
                 ShoppingCart = _shoppingCart,
                 ShoppingCartTotal = _shoppingCart.GetCartBuyTotal()
 
 
             };
-            return View("Index",shoppingCartVM);
+            return View("Index", shoppingCartVM);
         }
 
-
+        [Authorize]
         public IActionResult AddItemInShoppingCart(int snackID)
         {
             var snackSelected = _snackRepository.Snacks
@@ -45,9 +47,16 @@ namespace SnacksUdemy.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult RemoveItemInShoppingCart()
+        [Authorize]
+        public IActionResult RemoveItemInShoppingCart(int snackId)
         {
-            return View();
+            var snackSelected = _snackRepository.Snacks.FirstOrDefault(p => p.SnackId == snackId);
+
+            if (snackSelected != null)
+            {
+                _shoppingCart.RemoveCart(snackSelected);
+            }
+            return RedirectToAction("Index")
         }
     }
 }

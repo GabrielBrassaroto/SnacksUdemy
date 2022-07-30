@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SnacksUdemy.Models;
 
 namespace SnacksUdemy.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -16,6 +18,7 @@ namespace SnacksUdemy.Controllers
             _signInManager = signInManager;
         }
 
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginViewModel()
@@ -23,7 +26,8 @@ namespace SnacksUdemy.Controllers
                 ReturnUrl = returnUrl
             });
         }
-        
+
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
@@ -37,7 +41,7 @@ namespace SnacksUdemy.Controllers
             {
                 //usuario, password and cookies close navegador false and block user if password incorrect
                 var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
-               //if se result true return view index snacks
+                //if se result true return view index snacks
                 if (result.Succeeded)
                 {
                     //verification se exists value in  ReturnUrl
@@ -53,12 +57,13 @@ namespace SnacksUdemy.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(LoginViewModel registroVM)
@@ -66,7 +71,7 @@ namespace SnacksUdemy.Controllers
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser() { UserName = registroVM.UserName };
-                var result = await _userManager.CreateAsync(user,registroVM.Password);
+                var result = await _userManager.CreateAsync(user, registroVM.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Login", "Account");
@@ -76,11 +81,11 @@ namespace SnacksUdemy.Controllers
                     this.ModelState.AddModelError("Register", "Failed realize the register");
                 }
             }
-             return View(registroVM);
+            return View(registroVM);
         }
 
 
-
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Clear();

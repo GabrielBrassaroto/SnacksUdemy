@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SnacksUdemy.Models;
 using SnacksUdemy.Repositories.Interfaces;
 
@@ -15,12 +16,14 @@ namespace SnacksUdemy.Controllers
             _shoppingCart = shoppingCart;
         }
 
-
+        [Authorize]
+        [HttpGet]
         public IActionResult Checkout()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Checkout(Request request)
         {
