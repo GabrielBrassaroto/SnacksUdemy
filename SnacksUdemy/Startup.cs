@@ -34,7 +34,7 @@ public class Startup
         // alter policy password identity
         services.Configure<IdentityOptions>(options =>
         {
-            options.Password.RequireDigit= false;
+            options.Password.RequireDigit = false;
             options.Password.RequireLowercase = false;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireUppercase = false;
@@ -51,10 +51,10 @@ public class Startup
         // e addscope cria cada request uma session e carrinhos diferentese tempo de vida
 
         services.AddScoped(sp => ShoppingCart.GetCart(sp));
-       
+
         services.AddMemoryCache();
         services.AddSession();
-  
+
 
         services.AddControllersWithViews();
     }
@@ -87,9 +87,14 @@ public class Startup
         {
 
             endpoints.MapControllerRoute(
+                              name: "areas",
+                              pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+                            );
+
+            endpoints.MapControllerRoute(
                 name: "categoryFilter",
                 pattern: "Snack/{action}/{category?}",
-                defaults: new  {controller= "Snack", Action="List"});
+                defaults: new { controller = "Snack", Action = "List" });
 
             endpoints.MapControllerRoute(
                 name: "default",

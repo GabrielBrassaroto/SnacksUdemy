@@ -56,7 +56,7 @@ namespace SnacksUdemy.Controllers
             {
                 _shoppingCart.RemoveCart(snackSelected);
             }
-            return RedirectToAction("Index")
+            return RedirectToAction("Index");
         }
     }
 }
