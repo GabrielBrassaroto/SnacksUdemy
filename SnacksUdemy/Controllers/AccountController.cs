@@ -74,6 +74,7 @@ namespace SnacksUdemy.Controllers
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Member");
                     return RedirectToAction("Login", "Account");
                 }
                 else

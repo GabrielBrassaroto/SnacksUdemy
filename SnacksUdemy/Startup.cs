@@ -5,6 +5,7 @@ using SnacksUdemy.Models;
 using SnacksUdemy.Repositories;
 using SnacksUdemy.Repositories.Interfaces;
 using SnacksUdemy.Repository;
+using SnacksUdemy.Services;
 
 namespace LanchesMac;
 public class Startup
@@ -46,6 +47,7 @@ public class Startup
         services.AddTransient<ICategoryRepository, CategoryRepository>();
         services.AddTransient<IRequestRepository, RequestRepository>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();   //register service 
         //metodo que foi criado statico para ser invocado na statup
         // e ter carrinho com list de itens e context e session
         // e addscope cria cada request uma session e carrinhos diferentese tempo de vida
@@ -60,7 +62,8 @@ public class Startup
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, 
+        IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())
         {
@@ -76,6 +79,10 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
+        //create perfils
+        seedUserRoleInitial.SeedRoles();
+        //create user and assign perfil
+        seedUserRoleInitial.SeedUser();
 
         app.UseAuthentication();
         app.UseAuthorization();
