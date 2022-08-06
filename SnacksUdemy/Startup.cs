@@ -52,6 +52,14 @@ public class Startup
         // e ter carrinho com list de itens e context e session
         // e addscope cria cada request uma session e carrinhos diferentese tempo de vida
 
+        //add policy admin
+        services.AddAuthorization(options =>{
+               options.AddPolicy("Admin", policy =>
+               {
+                   policy.RequireRole("Admin");
+               });
+           });
+
         services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
         services.AddMemoryCache();
@@ -62,7 +70,7 @@ public class Startup
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, 
+    public void Configure(IApplicationBuilder app,
         IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())

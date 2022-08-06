@@ -55,6 +55,7 @@ namespace SnacksUdemy.Services
                     _userManager.AddToRoleAsync(user,"Member").Wait();  
                 }
             }
+
            // try to locate the user by email if not found create
             if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
             {
@@ -70,7 +71,7 @@ namespace SnacksUdemy.Services
 
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, "Member").Wait();
+                    _userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
         }
