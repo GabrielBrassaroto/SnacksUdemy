@@ -1,0 +1,43 @@
+﻿@model SnacksUdemy.ViewModels.RequestSnackViewModel
+
+@{
+    ViewData["Title"] = "Request Snack";
+    decimal totalRequest = 0;
+}
+
+<h1> Snack Request</h1>
+
+<hr />
+
+<h3>Request: @Html.DisplayFor(model => @Model.Request.RequestId)</h3>
+<h3>Client: @Html.DisplayFor(model => @Model.Request.Name)</h3>
+<h3>Date: @Html.DisplayFor(model => @Model.Request.DateRequest)</h3>
+<h3>Delivery: @Html.DisplayFor(model => @Model.Request.Adress)</h3>
+
+<table class="table">
+    @foreach (var item in @Model.Request.RequestItens)
+    {
+        totalRequest += (@item.Snack.Price * @item.Lenght);
+        <tr>
+            <td align="right">
+                <h3>@Html.DisplayFor(modelItem => item.Snack.Name)</h3>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+          <img src="@item.Snack.ImageUrl" class="img-fluid" height="100" width="100">
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <h3> item.Snack.Price</h3>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <h3>@Html.DisplayFor(modelItem => item.Lenght)</h3>
+            </td>
+        </tr>
+
+    }
+</table>

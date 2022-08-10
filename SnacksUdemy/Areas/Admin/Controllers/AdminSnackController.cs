@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using SnacksUdemy;
 using SnacksUdemy.Models;
 
 namespace SnacksUdemy.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminSnackController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,12 +23,24 @@ namespace SnacksUdemy.Areas.Admin.Controllers
             _context = context;
         }
 
-        // GET: Admin/AdminSnack
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Name")
         {
-            var appDbContext = _context.Snacks.Include(s => s.Category);
-            return View(await appDbContext.ToListAsync());
+            var resultado = _context.Snacks.AsNoTracking()
+                                      .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.Name.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(resultado, 3, pageindex, sort, "Nome");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+            return View(model);
         }
+
+
 
         // GET: Admin/AdminSnack/Details/5
         public async Task<IActionResult> Details(int? id)

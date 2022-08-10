@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "UploadFiles";
+}
+
+<img src="~/Images/carousel1.jpg" width="200" height="150" />
+<hr />
+
+<div class="jumbotron jumbotron-fluid">
+
+    <div class="container">
+
+        @if (@ViewData["Erro"] != null)
+        {
+            <img src="~/Images/error1.jpg" width="150" height="150">
+            <h4>@ViewData["Erro"]</h4>
+        }
+    </div>
+
+    <div class="container">
+
+        @if (@ViewData["Result"] != null)
+        {
+            <h4>@ViewData["Result"]</h4>
+            @if (@ViewData["Result"] != null)
+            {
+                @foreach (string file in ViewBag.Files)
+                {
+                   <li>
+                       @file
+                   </li> 
+                }
+
+
+            }
+        }
+
+
+    </div>
+
+</div>

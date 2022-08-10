@@ -1,10 +1,26 @@
-﻿@model IEnumerable<SnacksUdemy.Models.Category>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<SnacksUdemy.Models.Category>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Request</h1>
+
+<form method="get" class="form-inline">
+    <input name="filter" class="form-control" placeholder="Filter" 
+    value="@Model.RouteValue["Filter"]"/>
+    <button type="submit" class="btn btn-info">
+        <span class="glyphicon glyphicon-seach" arial-hidden="true"></span>
+        Seach
+    </button>
+</form>
+
+Total Requests : @Model.TotalRecordCount
+
+<div>
+    <vc:pager paging-list="@Model"></vc:pager>
+</div>
+
 
 <p>
     <a asp-action="Create">Create New</a>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using SnacksUdemy;
+using SnacksUdemy.Areas.Services;
 using SnacksUdemy.Models;
 using SnacksUdemy.Repositories;
 using SnacksUdemy.Repositories.Interfaces;
@@ -23,6 +25,8 @@ public class Startup
         //Additional AppDBContext 
         services.AddDbContext<AppDbContext>(options => options.
         UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
 
         //IdentityUser - gerencia o usuario
         //IdentityRole fornece informacoes sobre o usuario
@@ -52,6 +56,9 @@ public class Startup
         // e ter carrinho com list de itens e context e session
         // e addscope cria cada request uma session e carrinhos diferentese tempo de vida
 
+        services.AddScoped<ReportSalesService>();
+
+
         //add policy admin
         services.AddAuthorization(options =>{
                options.AddPolicy("Admin", policy =>
@@ -61,6 +68,16 @@ public class Startup
            });
 
         services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
+
+        services.AddPaging(
+            options =>
+            {
+                options.ViewName = "Bootstrap4";
+                options.PageParameterName = "pageindex";
+            }
+            ); 
+
 
         services.AddMemoryCache();
         services.AddSession();
