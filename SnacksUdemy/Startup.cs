@@ -57,6 +57,8 @@ public class Startup
         // e addscope cria cada request uma session e carrinhos diferentese tempo de vida
 
         services.AddScoped<ReportSalesService>();
+        services.AddScoped<SalesChartService>();
+
 
 
         //add policy admin
